@@ -1,0 +1,3 @@
+[submodule "git-source-metrics"]
+	path = git-source-metrics
+	url = https://github.com/mo/git-source-metrics.git
