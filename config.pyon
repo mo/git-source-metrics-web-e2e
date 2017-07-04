@@ -1,19 +1,5 @@
 {
     "charts": {
-        "active_authors_60days": {
-            "chart_title": "active dev count per 60 day window",
-            "chart_series": [
-                { "metric": "active_authors_60days", "repo": "*" },
-            ],
-            "annotations": [ "testing_dates" ],
-        },
-        "active_authors_200days": {
-            "chart_title": "active dev count per 200 day window",
-            "chart_series": [
-                { "metric": "active_authors_200days", "repo": "*" },
-            ],
-            "annotations": [ "testing_dates" ],
-        },
         "active_authors_365days": {
             "chart_title": "active dev count per 365 day window",
             "chart_series": [
@@ -51,26 +37,6 @@
         "commit_count_60days_moving": {
             "chart_title": "commit count per 60 day window (moving avg)",
             "chart_series": [
-            ],
-            "annotations": [ "testing_dates" ],
-        },
-        "inserts_plus_deletes_60days": {
-            "chart_title": "inserts + deletes per 60 day window",
-            "chart_series": [
-                { "metric": "inserts_plus_deletes_60days", "repo": "*" },
-            ],
-            "annotations": [ "testing_dates" ],
-        },
-        "inserts_plus_deletes_60days_moving": {
-            "chart_title": "inserts + deletes per 60 day window (moving avg)",
-            "chart_series": [
-            ],
-            "annotations": [ "testing_dates" ],
-        },
-        "inserts_plus_deletes_365days": {
-            "chart_title": "inserts + deletes per 365 day window",
-            "chart_series": [
-                { "metric": "inserts_plus_deletes_365days", "repo": "*" },
             ],
             "annotations": [ "testing_dates" ],
         },
@@ -158,29 +124,11 @@
         },
     },
     "metrics": {
-        "active_authors_60days": {
-            "title": "active authors last 60 days",
-            "type": "command",
-            "cmd": "git-log-robust-since $((%(timestamp)s-60*60*60*24)) %(sha1)s | cut -f 3 -d ' ' | cut -f 1 -d @ | sort | uniq | wc -l",
-            "workdir": False,
-        },
-        "active_authors_200days": {
-            "title": "active authors last 200 days",
-            "type": "command",
-            "cmd": "git-log-robust-since $((%(timestamp)s-200*60*60*24)) %(sha1)s | cut -f 3 -d ' ' | cut -f 1 -d @ | sort | uniq | wc -l",
-            "workdir": False,
-        },
         "active_authors_365days": {
             "title": "active authors last 365 days",
             "type": "command",
             "cmd": "git-log-robust-since $((%(timestamp)s-365*60*60*24)) %(sha1)s | cut -f 3 -d ' ' | cut -f 1 -d @ | sort | uniq | wc -l",
             "workdir": False,
-        },
-        "moving_average_active_authors_60days": {
-            "title": "active authors last 60 days (moving average)",
-            "type": "moving_average",
-            "underlying_metric": "active_authors_60days",
-            "moving_average_tick_width": 8,
         },
         "commit_count": {
             "title": "commit count",
@@ -194,18 +142,6 @@
             "cmd": "git log --no-merges --oneline %(sha1)s | wc -l",
             "workdir": False,
         },
-        "commit_count_7days": {
-            "title": "commit count last 7 days",
-            "type": "command",
-            "cmd": "git-log-robust-since $((%(timestamp)s-7*60*60*24)) %(sha1)s | wc -l",
-            "workdir": False,
-        },
-        "moving_average_commit_count_7days": {
-            "title": "commit count last 7 days (16w moving average)",
-            "type": "moving_average",
-            "underlying_metric": "commit_count_7days",
-            "moving_average_tick_width": 16,
-        },
         "commit_count_60days": {
             "title": "commit count last 60 days",
             "type": "command",
@@ -215,85 +151,43 @@
         "commit_count_365days": {
             "title": "commit count last 365 days",
             "type": "command",
-            "cmd": "git-log-robust-since $((%(timestamp)s-365*60*60*24)) %(sha1)s | wc -l",
-            "workdir": False,
-        },
-        "moving_average_commit_count_60days": {
-            "title": "commit count last 60 days (moving average)",
-            "type": "moving_average",
-            "underlying_metric": "commit_count_60days",
-            "moving_average_tick_width": 8,
-        },
-        "commit_count_90days": {
-            "title": "commit count last 90 days",
-            "type": "command",
-            "cmd": "git-log-robust-since $((%(timestamp)s-90*60*60*24)) %(sha1)s | wc -l",
-            "workdir": False,
-        },
-        "commit_count_120days": {
-            "title": "commit count last 120 days",
-            "type": "command",
-            "cmd": "git-log-robust-since $((%(timestamp)s-120*60*60*24)) %(sha1)s | wc -l",
-            "workdir": False,
-        },
-        "commit_count_365days": {
-            "title": "commit count last 365 days",
-            "type": "command",
-            "cmd": "git-log-robust-since $((%(timestamp)s-365*60*60*24)) %(sha1)s | wc -l",
+            "cmd": "git-log-ct-from-to-faster --from-timestamp $((%(timestamp)s-365*60*60*24)) --to-timestamp %(timestamp)s %(branch)s | wc -l",
             "workdir": False,
         },
         "commits_per_developer_60days": {
             "title": "commits/developer last 60 days",
             "type": "command",
-            "cmd": "echo $(($(git-log-robust-since $((%(timestamp)s-60*60*60*24)) %(sha1)s | wc -l)/$(git-log-robust-since $((%(timestamp)s-60*60*60*24)) %(sha1)s | cut -f 3 -d ' ' | cut -f 1 -d @ | sort | uniq | wc -l)))",
-            "workdir": False,
-        },
-        "inserts_plus_deletes_60days": {
-            "title": "insertions+deletions last 60 days",
-            "type": "command",
-            "cmd": "git-insertions-plus-deletions $(git-sha1-before $((%(timestamp)s-60*60*60*24)) %(sha1)s) %(sha1)s",
-            "workdir": False,
-        },
-        "inserts_plus_deletes_60days_moving_average": {
-            "title": "insertions+deletions last 60 days (16w moving average)",
-            "type": "moving_average",
-            "underlying_metric": "inserts_plus_deletes_60days",
-            "moving_average_tick_width": 16,
-        },
-        "inserts_plus_deletes_365days": {
-            "title": "insertions+deletions last 365 days",
-            "type": "command",
-            "cmd": "git-insertions-plus-deletions $(git-sha1-before $((%(timestamp)s-365*60*60*24)) %(sha1)s) %(sha1)s",
+            "cmd": "echo $(($(git-log-ct-from-to-faster --from-timestamp $((%(timestamp)s-60*60*60*24)) --to-timestamp %(timestamp)s %(branch)s | wc -l)/$(git-log-ct-from-to-faster --from-timestamp $((%(timestamp)s-60*60*60*24)) --to-timestamp %(timestamp)s %(branch)s | cut -f 3 -d ' ' | cut -f 1 -d @ | sort | uniq | wc -l)))",
             "workdir": False,
         },
         "authors_with_more_than_3_commits_in_last_90_days": {
             "title": "number of authors with more than 3 commits per 90 days",
             "type": "command",
-            "cmd": "git-log-robust-since $((%(timestamp)s-90*60*60*24)) %(sha1)s | cut -f 3- -d ' ' | sort | uniq -c | sort -n -k1 | awk '$1 > 3' | wc -l",
+            "cmd": "git-log-ct-from-to-faster --from-timestamp $((%(timestamp)s-90*60*60*24)) --to-timestamp %(timestamp)s %(branch)s | cut -f 3- -d ' ' | sort | uniq -c | sort -n -k1 | awk '$1 > 3' | wc -l",
             "workdir": False,
         },
         "authors_with_more_than_5_commits_in_last_90_days": {
             "title": "number of authors with more than 5 commits per 90 days",
             "type": "command",
-            "cmd": "git-log-robust-since $((%(timestamp)s-90*60*60*24)) %(sha1)s | cut -f 3- -d ' ' | sort | uniq -c | sort -n -k1 | awk '$1 > 5' | wc -l",
+            "cmd": "git-log-ct-from-to-faster --from-timestamp $((%(timestamp)s-90*60*60*24)) --to-timestamp %(timestamp)s %(branch)s | cut -f 3- -d ' ' | sort | uniq -c | sort -n -k1 | awk '$1 > 5' | wc -l",
             "workdir": False,
         },
         "authors_with_more_than_3_commits": {
-            "title": "number of authors with more than 3 commits",
+            "title": "number of authors with more than 3 commits (new)",
             "type": "command",
-            "cmd": "git log --pretty=format:%%an %(sha1)s | sort | uniq -c | sort -n -k1 | awk '$1 > 3' | wc -l",
+            "cmd": "git-log-ct-from-to-faster --to-timestamp %(timestamp)s | cut -f 3 -d ' ' | sort | uniq -c | sort -n -k1 | awk '$1 > 3' | wc -l",
             "workdir": False,
         },
         "authors_with_more_than_10_commits": {
             "title": "number of authors with more than 10 commits",
             "type": "command",
-            "cmd": "git log --pretty=format:%%an %(sha1)s | sort | uniq -c | sort -n -k1 | awk '$1 > 10' | wc -l",
+            "cmd": "git-log-ct-from-to-faster --to-timestamp %(timestamp)s | cut -f 3 -d ' ' | sort | uniq -c | sort -n -k1 | awk '$1 > 10' | wc -l",
             "workdir": False,
         },
         "authors_with_more_than_50_commits": {
             "title": "number of authors with more than 50 commits",
             "type": "command",
-            "cmd": "git log --pretty=format:%%an %(sha1)s | sort | uniq -c | sort -n -k1 | awk '$1 > 50' | wc -l",
+            "cmd": "git-log-ct-from-to-faster --to-timestamp %(timestamp)s | cut -f 3 -d ' ' | sort | uniq -c | sort -n -k1 | awk '$1 > 50' | wc -l",
             "workdir": False,
         },
         "npm_downloads_": {
