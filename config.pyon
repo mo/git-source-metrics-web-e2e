@@ -72,43 +72,43 @@
     "git_repos": {
         "nightwatch": {
             "git_url": "git@github.com:nightwatchjs/nightwatch.git",
-            "color": "#390F39",
+            "color": "#7f7f7f",
         },
         "testcafe": {
             "git_url": "git@github.com:DevExpress/testcafe.git",
-            "color": "#8D6748",
+            "color": "#d62728",
         },
         "protractor": {
             "git_url": "git@github.com:angular/protractor.git",
-            "color": "orange",
+            "color": "#17becf",
         },
         "codeceptjs": {
             "git_url": "git@github.com:Codeception/CodeceptJS.git",
-            "color": "#07123C",
-        },
-        "casperjs": {
-            "git_url": "git@github.com:casperjs/casperjs.git",
-            "color": "#A770A1",
+            "color": "#ff7f0e",
         },
         "webdriverio": {
             "git_url": "git@github.com:webdriverio/webdriverio.git",
-            "color": "#99424F",
-        },
-        "zombiejs": {
-            "git_url": "git@github.com:assaf/zombie.git",
-            "color": "#42BEAE",
+            "color": "#e377c2",
         },
         "theintern": {
             "git_url": "git@github.com:theintern/intern.git",
-            "color": "orange",
+            "color": "#2ca02c",
         },
         "nightmarejs": {
             "git_url": "git@github.com:segmentio/nightmare.git",
-            "color": "magenta",
+            "color": "#8c564b",
+        },
+        "nemo": {
+            "git_url": "git@github.com:paypal/nemo.git",
+            "color": "#9467bd",
         },
         "chimp": {
             "git_url": "git@github.com:xolvio/chimp.git",
-            "color": "gray",
+            "color": "#1f77b4",
+        },
+        "wd": {
+            "git_url": "git@github.com:admc/wd.git",
+            "color": "#ffc670",
         },
     },
     "metrics": {
